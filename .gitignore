@@ -1,0 +1,33 @@
+# ---- 环境：体积大，可用 uv sync 重建 ----
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ---- 运行产物：每次跑脚本都会重新生成 ----
+out/
+logs/
+*.log
+
+# ---- 数据与音频：体积大，且可能有版权问题 ----
+data/
+*.wav
+*.mp3
+*.flac
+*.m4a
+
+# ---- 模型权重：动辄 GB 级 ----
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+
+# ---- 密钥：绝对不能上传 ----
+.env
+.env.*
+
+# ---- 编辑器：忽略 .vscode 里的一切，但保留 settings.json ----
+.vscode/*
+!.vscode/settings.json
+.idea/

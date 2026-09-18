@@ -1,0 +1,46 @@
+[project]
+name = "speech-ai-lab"
+version = "0.1.0"
+description = "语音 AI 应用工程师学习实验区（36 周计划）"
+requires-python = ">=3.11"
+dependencies = [
+    "huggingface-hub>=1.31.0",
+    "librosa>=0.11.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.4.6",
+    "pandas>=3.0.5",
+    "pyyaml>=6.0.3",
+    "scipy>=1.17.1",
+    "soundfile>=0.14.0",
+    "torch",
+    "torchaudio",
+    "tqdm>=4.70.1",
+]
+
+# ---------------------------------------------------------------------------
+# 为什么需要下面这段配置：
+#   PyPI 上的 torch 是 CPU-only 版（wheel 名没有 +cu 后缀），
+#   CUDA 轮子只在 PyTorch 官方索引上发布。所以必须显式声明索引，
+#   并让 torch/torchaudio 只从这个索引解析。
+#
+# 为什么不用命令行 --index-url ？
+#   那样只对本次命令生效。换台机器跑 uv sync 时会回到 PyPI，
+#   静默装成 CPU 版 —— 报错信息不会告诉你原因。
+#   写进 pyproject.toml，才会跟着 uv.lock 一起可复现。
+#
+# 为什么选 cu128？各索引实测解析结果（2026-09-14 于本机）：
+#   cu124 -> torch 2.6.0  + torchaudio 2.6.0   匹配，但偏旧
+#   cu126 -> torch 2.14.0 + torchaudio 2.11.0  版本不匹配
+#   cu128 -> torch 2.11.0 + torchaudio 2.11.0  匹配且够新   ← 选它
+#   cu129 -> torch 2.8.0  + torchaudio 2.8.0   匹配，但偏旧
+#   cu130 -> torch 2.14.0 + torchaudio 2.11.0  版本不匹配
+# 本机显卡 RTX 4070 Laptop（Ada, sm_89），CUDA 12.8 完全支持。
+# ---------------------------------------------------------------------------
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }

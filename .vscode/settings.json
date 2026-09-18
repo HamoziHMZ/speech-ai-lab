@@ -1,0 +1,24 @@
+{
+  // ===== 这个工程固定使用 uv 管理的 3.11 环境 =====
+  // 用 ${workspaceFolder} 相对路径：换机器、换盘符都不用改
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+
+  // 新开终端时自动激活上面这个环境。
+  // 作用：避免 VS Code 或 PATH 里其它 Python（系统 3.12 / hermes 的 venv / Store 空壳）被误用。
+  // 注意：日常工作仍然推荐 `uv run python xxx.py`，激活只是兜底。
+  "python.terminal.activateEnvironment": true,
+
+  // 本学习库对文件编码敏感：
+  //   - 生成的 .md 必须是 UTF-8 without BOM（带 BOM 会让 Obsidian 的 YAML front matter 解析失败）
+  //   - .ps1 必须是 UTF-8 with BOM（否则 PowerShell 5.1 读中文路径乱码）
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": false,
+
+  // 统一换行符，避免脚本在 Git Bash 里报 $'\r': command not found
+  "files.eol": "\r\n",
+
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}
