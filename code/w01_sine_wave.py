@@ -18,7 +18,9 @@ n = int(SR * DUR)                                   # 采样点数 = 16000 × 2 
 t = np.arange(n) / SR                               # 时间轴数组 [0, 1/16000, ...]，向量化无循环
 wave = AMP * np.sin(2 * np.pi * FREQ * t)           # 正弦波 A·sin(2πft)，整批点一次算完
 
-tag = f"f{int(FREQ)}_a{str(AMP).replace('.', 'p')}"  # 把频率和幅度拼进文件名，各次实验不互相覆盖
+amp_s = str(AMP).replace('.', 'p')                   # 1.5 -> "1p5"，避免文件名里出现两个点
+dur_s = str(DUR).replace('.', 'p')                   # 0.5 -> "0p5"
+tag = f"f{int(FREQ)}_a{amp_s}_d{dur_s}"              # 三个自变量全进文件名，互不覆盖
 wav_path = out / f"sine_{tag}.wav"                    # ★ / 不是除法，是路径拼接；f"..." 里能嵌变量
 sf.write(wav_path, wave, SR, subtype="PCM_16")      # 写 wav：浮点映射为16位整数，体积=点数×2+44
 

@@ -5,6 +5,7 @@ description = "语音 AI 应用工程师学习实验区（36 周计划）"
 requires-python = ">=3.11"
 dependencies = [
     "huggingface-hub>=1.31.0",
+    "jiwer>=4.0.0",
     "librosa>=0.11.0",
     "matplotlib>=3.11.2",
     "numpy>=2.4.6",
